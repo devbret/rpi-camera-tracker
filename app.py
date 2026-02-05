@@ -9,7 +9,6 @@ CSV_FILE = "color_analysis.csv"
 TEMP_IMAGE = "current_image.jpg"
 
 def capture_image():
-    """Capture an image using raspistill, overwriting the same file."""
     subprocess.run([
         "raspistill",
         "-o", TEMP_IMAGE,
@@ -19,7 +18,6 @@ def capture_image():
     ])
 
 def analyze_image(image_path):
-    """Analyze the image to determine common hue and average lightness."""
     img = Image.open(image_path)
     pixels = list(img.getdata())
     
@@ -34,7 +32,6 @@ def analyze_image(image_path):
     return common_hue, avg_lightness
 
 def append_to_csv(timestamp, hue, lightness):
-    """Append analysis data to a CSV file."""
     file_exists = os.path.isfile(CSV_FILE)
     
     with open(CSV_FILE, mode='a', newline='') as file:
