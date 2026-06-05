@@ -1,14 +1,20 @@
 # Raspberry Pi Camera Tracker
 
-Runs continuously on a Raspberry Pi to periodically capture photos using the Pi camera, analyze their color characteristics and log results to a CSV file.
+Run continuously on a Raspberry Pi, periodically capturing photos with the Pi camera, analyzing their color characteristics and logging the results to a CSV file.
 
-## Overview
+## Application Overview
 
-More specifically, every 15 seconds this program takes a low-resolution image with `raspistill`, loads the image using `Pillow`, converts all pixel colors from RGB to HLS and computes the average hue and lightness across the image. Each measurement is timestamped and appended to `color_analysis.csv`, with the file and header created automatically if they do not already exist. The script is designed for long-running environmental or lighting analysis and can be cleanly stopped while preserving all collected data.
+Captures and analyzes environmental color and light data at regular 15-second intervals using a Raspberry Pi camera.
 
-## Set Up Instructions
+During each cycle, the script takes a low-resolution image with `raspistill`, saves it as a temporary image file and processes it with `Pillow`. The image pixels are converted from RGB to HLS color space so the program can calculate the average hue and lightness of the captured scene.
 
-This application is intended to run on a Raspberry Pi computer, with the Raspberry Pi OS already installed. Below are the required software programs and instructions for installing and using this application.
+Each reading is then saved to `color_analysis.csv` with a timestamp, hue value and lightness value. If the CSV file does not already exist, the script automatically creates it and writes the appropriate header row.
+
+This application is intended for long-running environmental, lighting or color-temperature-adjacent analysis. It can run continuously until stopped with `Ctrl + c`, while preserving all measurements already written to the CSV file.
+
+## Basic Setup Instructions
+
+This application is intended to run on a Raspberry Pi computer, with the Raspberry Pi OS already installed. Below are the required software programs and instructions for installing and using this tool.
 
 ### Programs Needed
 
@@ -22,26 +28,30 @@ This application is intended to run on a Raspberry Pi computer, with the Raspber
 
 2. Open a terminal
 
-3. Clone this repository using `git` by running the following command: `git clone git@github.com:devbret/rpi-camera-tracker.git`
+3. Clone this repository: `git clone git@github.com:devbret/rpi-camera-tracker.git`
 
-4. Navigate to the repo's directory by running: `cd rpi-camera-tracker`
+4. Navigate to the repo's directory: `cd rpi-camera-tracker`
 
-5. Create a virtual environment with this command: `python3 -m venv venv`
+5. Create a virtual environment: `python3 -m venv venv`
 
-6. Activate your virtual environment using: `source venv/bin/activate`
+6. Activate your virtual environment: `source venv/bin/activate`
 
-7. Install the needed dependencies for running the script: `pip install -r requirements.txt`
+7. Install the needed dependencies: `pip install -r requirements.txt`
 
-8. Run the program using this command: `python3 app.py`
+8. Run the program: `python3 app.py`
 
-9. To exit the virtual environment (venv), type this command in the terminal: `deactivate`
+9. Exit the virtual environment: `deactivate`
 
 ## Other Considerations
 
 This project repo is intended to demonstrate an ability to do the following:
 
-- Capture images at fixed intervals in order to extract average hue and lightness values
+- Capture recurring image samples from a Raspberry Pi camera to monitor changes in environmental lighting over time
 
-- Log color analysis data to a CSV file for long-term tracking and visualization of lighting conditions
+- Convert image color data into measurable hue and lightness values for simple long-term color analysis
+
+- Record each timestamped measurement in a CSV file for later review, visualization or comparison
+
+- Collect continuous environmental color data without requiring manual image analysis
 
 If you have any questions or would like to collaborate, please reach out either on GitHub or via [my website](https://bretbernhoft.com/).
